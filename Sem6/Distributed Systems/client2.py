@@ -1,40 +1,38 @@
 # Import socket module
 import socket
 
-# Create a TCP socket using IPv4
+# Create TCP socket
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# Connect to the server
+# Connect to server (replace IP for network usage)
 client_socket.connect(("localhost", 5000))
 
-# Inform user that connection is successful
+# Inform connection status
 print("Connected to server.")
 
-# Infinite loop for continuous chatting
+# Loop for continuous chat
 while True:
-    # Take input from the client user
+    # Take input from client user
     msg = input("Client: ")
 
-    # Send the message to the server
+    # Send message to server
     client_socket.send(msg.encode())
 
-    # If client types 'exit', stop communication
+    # Exit if client types 'exit'
     if msg.lower() == "exit":
         break
 
-    # Receive reply from the server
+    # Receive reply from server
     reply = client_socket.recv(1024).decode()
 
-    # If server sends 'exit', close connection
+    # Exit if server sends 'exit'
     if reply.lower() == "exit":
         print("Server disconnected.")
         break
 
-    # Print server's reply
+    # Print server reply
     print("Server:", reply)
 
-# Close the client socket
+# Close the socket
 client_socket.close()
-
-# Inform user that connection is closed
 print("Connection closed.")
